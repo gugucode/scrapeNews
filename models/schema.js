@@ -14,10 +14,25 @@ module.exports = function (mongoose) {
       type: String
     },
 
+    writtenDate: {
+      type: Date,
+      default: Date.now
+    },
+
+    saveDate: {
+      type: Date,
+      default: Date.now
+    },
+
     summary: {
       type: String,
       maxlength: 600,
       trim: true
+    },
+
+    image: {
+      type: String,
+      default: 'Sorry, no image!'
     },
 
     link: {
