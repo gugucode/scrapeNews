@@ -2,6 +2,7 @@ var express = require('express')
 var mongoose = require('mongoose')
 var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
+
 var app = express()
 const PORT = 3000
 
@@ -12,6 +13,8 @@ var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlines
 // Connect to the Mongo DB
 mongoose.Promise = Promise
 mongoose.connect(MONGODB_URI)
+var schemas = require('./models/schema.js')(mongoose)
+var news = mongoose.model('news', schemas.newsSchema)
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,7 +30,8 @@ app.engine(
 )
 app.set('view engine', 'handlebars')
 
-require('./routes/newsRoutes.js')(app, mongoose)
+require('./routes/indexRoutes.js')(app, news)
+require('./routes/newsRoutes.js')(app, news)
 
 // Start the server
 app.listen(PORT, function () {

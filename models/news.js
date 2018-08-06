@@ -1,36 +1,35 @@
 
-module.exports = function (mongoose) {
-  var schemas = require('./schema.js')(mongoose)
+module.exports = function (news) {
+//   var schemas = require('./schema.js')(mongoose)
 
-  var news = mongoose.model('news', schemas.newsSchema)
+  //   var news = mongoose.model('news', schemas.newsSchema)
 
   function saveNews (newsData) {
-    console.log(newsData);
+    // console.log(newsData);
     news.create(newsData, function (err, data) {
       if (err) {
-        throw err
-      } else {
-        return true
-      }
+        console.log(err)
+      } 
     })
   }
 
-  function findAll () {
-    news.findAll().sort({saveDate: 1}, function (err, data) {
+  function findAll (res, cb) {
+    news.find().sort({saveDate: 1}).exec(function (err, data) {
       if (err) {
-        throw err
+        console.log(err)
       } else {
-        return data
+        // console.log(data)
+        cb(res, data)
       }
     })
   }
 
-  function removeNews (newsId) {
+  function removeNews (newsId,res,cb) {
     news.remove({_id: newsId}, function (err, data) {
       if (err) {
-        throw err
+        console.log(err)
       } else {
-        return true
+        cb(res,data);
       }
     })
   }
