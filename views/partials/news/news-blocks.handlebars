@@ -1,0 +1,28 @@
+
+
+{{#each news}}
+    <div class="row">
+        <div class="col-12" style="background:AliceBlue;margin: 2em">
+            <div class="posts-wrap" post-id={{_id}}>
+                <div class="portfolio-info" >
+                    <h4><a href={{link}}>{{title}}</a></h4>
+                    <p>By {{author}}</p>
+                    <p>{{formatDate writtenDate}}</p>
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href={{concat "#news" _id}} role="button" aria-expanded="false" >
+                            Detail
+                        </a>
+                    </p>
+                    <div class="collapse" id={{concat "news" _id}}>
+                        <div class="card card-body">
+                            <p>{{summary}}</p>
+                            <img src={{image}} style="width:40%"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/each}}
+
+</div>

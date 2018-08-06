@@ -9,27 +9,27 @@ module.exports = function (news) {
     news.create(newsData, function (err, data) {
       if (err) {
         console.log(err)
-      } 
-    })
-  }
-
-  function findAll (res, cb) {
-    news.find().sort({saveDate: 1}).exec(function (err, data) {
-      if (err) {
-        console.log(err)
-      } else {
-        // console.log(data)
-        cb(res, data)
       }
     })
   }
 
-  function removeNews (newsId,res,cb) {
+  function findAll (res, formatDate, concat, cb) {
+    news.find().sort({saveDate: 1}).exec(function (err, data) {
+      if (err) {
+        console.log(err)
+      } else {
+        cb(res, data, formatDate, concat)
+        // return data
+      }
+    })
+  }
+
+  function removeNews (newsId, res, cb) {
     news.remove({_id: newsId}, function (err, data) {
       if (err) {
         console.log(err)
       } else {
-        cb(res,data);
+        cb(res, data)
       }
     })
   }
