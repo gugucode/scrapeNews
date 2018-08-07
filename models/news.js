@@ -4,13 +4,14 @@ module.exports = function (news) {
 
   //   var news = mongoose.model('news', schemas.newsSchema)
 
-  function saveNews (newsData) {
+  function saveNews (newsData, res) {
     // console.log(newsData);
-    news.create(newsData, function (err, data) {
-      if (err) {
-        console.log(err)
-      }
-    })
+    news.create(newsData)
+      .then(function (data) {
+        // View the added result in the console
+        // return res.json(data)
+        console.log("saved")
+      })
   }
 
   function findAll (res, formatDate, concat, cb) {

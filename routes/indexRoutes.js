@@ -6,12 +6,13 @@ module.exports = function (app, news) {
 
   var formatDate = function (date) {
     var m = date.getMonth() + 1
-    var d = date.getDate() + 1
+    var d = date.getDate() === 31 ? 31 : date.getDate() + 1
     return m + '/' + d + '/' + date.getFullYear()
   }
 
   app.get('/', function (req, res) {
     newsModel.findAll(res, formatDate, concat, function (res, data, formatDate, concat) {
+      // console.log("redirect")
       res.render('index', {
         news: data,
         helpers: {

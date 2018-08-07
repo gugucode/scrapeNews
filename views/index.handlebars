@@ -43,9 +43,17 @@ Intro Section
 News Section
 ============================-->
 <section id="portfolio"  class="section-bg" >
-    <div class="container">
+    <div class="row">
+        <div class="col-1 offset-md-10">
+            <button id="scrapeBnt" type="button" class="btn btn-info">Scrape more news</button>
+        </div>
+    </div>
+    <div id="newsSec">
         {{> news/news-blocks}}
     </div>
-</section><!-- #portfolio -->
+    
+    
+</section>
 
 
+<script src="javascripts/handleEvents.js"></script>

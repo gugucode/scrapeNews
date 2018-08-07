@@ -6,6 +6,7 @@ module.exports = function (mongoose) {
     title: {
       type: String,
       required: true,
+      unique: true,
       maxlength: 100,
       trim: true
     },

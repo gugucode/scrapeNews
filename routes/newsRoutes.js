@@ -10,7 +10,11 @@ function scrapeNewYorkTime (newsModel, res) {
     }
 
     var $ = cheerio.load(html)
+
+    var lastOne = $('#latest-panel div ol.theme-stream li').length - 1
+    console.log(lastOne)
     $('#latest-panel div ol.theme-stream li').each(function (i, element) {
+      console.log(i)
       var newsData = {
         title: $(element).find('h2.headline').text().trim(),
         author: $(element).find('p.byline').text().trim().slice(3),
@@ -20,10 +24,10 @@ function scrapeNewYorkTime (newsModel, res) {
         link: $(element).find('.story-link').attr('href')
       }
       if (newsData.title !== '' && newsData.link !== '') {
-        newsModel.saveNews(newsData)
+        newsModel.saveNews(newsData, res)
       }
     })
-    res.redirect('/')
+    res.end()
   })
 }
 
@@ -31,6 +35,7 @@ module.exports = function (app, news) {
   var newsModel = require('../models/news.js')(news)
 
   app.get('/scrape', function (req, res) {
+    console.log('scrape')
     scrapeNewYorkTime(newsModel, res)
   })
 }
