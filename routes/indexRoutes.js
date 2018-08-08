@@ -1,5 +1,6 @@
-module.exports = function (app, news) {
+module.exports = function (app, news, comments) {
   var newsModel = require('../models/news.js')(news)
+  var commentsModel = require('../models/comments.js')(comments)
   var concat = function (s1, s2) {
     return s1 + s2
   }
@@ -11,14 +12,14 @@ module.exports = function (app, news) {
   }
 
   app.get('/', function (req, res) {
-    newsModel.findAll(res, formatDate, concat, function (res, data, formatDate, concat) {
-      // console.log("redirect")
+    var helpers = {
+      formatDate: formatDate,
+      concat: concat
+    }
+    newsModel.findAll(res, helpers, function (res, data, helpers) {    
       res.render('index', {
         news: data,
-        helpers: {
-          formatDate: formatDate,
-          concat: concat
-        }
+        helpers: helpers
       })
       // res.json(data)
     })

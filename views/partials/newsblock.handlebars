@@ -1,7 +1,7 @@
 
 
-{{#each news}}
-    <div class="row justify-content-md-center">
+{{!-- {{#each news}} --}}
+    <div class="row">
         <div class="col-10" style="background:AliceBlue;margin: 2em">
             <div class="posts-wrap" post-id={{_id}}>
                 <div class="portfolio-info" >
@@ -17,20 +17,12 @@
                         <div class="card card-body">
                             <p>{{summary}}</p>
                             <img src={{image}} style="width:40%"/>
-                            <form>
-                                <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Commment</label>
-                                    <textarea class="form-control" id={{concat "commentBox" _id}} rows="3"></textarea>
-                                </div>
-                                <button class="btn btn-primary commentBnt" post-id={{_id}}>Submit</button>
-                            </form>
-                            <div id={{concat "commentList" _id}}>
-                                {{> comments/comment-blocks}}
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-{{/each}}
+{{!-- {{/each}} --}}
+
+{{!-- </div> --}}

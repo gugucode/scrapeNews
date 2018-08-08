@@ -63,7 +63,7 @@ module.exports = function (mongoose) {
     },
 
     newsId: {
-      type: Number,
+      type: String,
       require: true
     },
 

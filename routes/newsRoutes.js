@@ -14,7 +14,7 @@ function scrapeNewYorkTime (newsModel, res) {
     var lastOne = $('#latest-panel div ol.theme-stream li').length - 1
     console.log(lastOne)
     $('#latest-panel div ol.theme-stream li').each(function (i, element) {
-      console.log(i)
+      // console.log(i)
       var newsData = {
         title: $(element).find('h2.headline').text().trim(),
         author: $(element).find('p.byline').text().trim().slice(3),

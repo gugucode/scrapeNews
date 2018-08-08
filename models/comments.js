@@ -1,40 +1,38 @@
-var mongoose = require('mongoose')
-var schemas = require('./schema.js')(mongoose)
+module.exports = function (comments) {
+  function saveComment (commentData, res) {
+    comments.create(commentData, function (err, data) {
+      if (err) {
+        throw err
+      } else {
+        console.log(data)
+        res.json(data)
+      }
+    })
+  }
 
-var comments = mongoose.model('comments', schemas.newsSchema)
+  function findByNewsId (newsId, res) {
+    comments.find({newsId: newsId}).sort({postDate: 1}).exec(function (err, data) {
+      if (err) {
+        throw err
+      } else {
+        res.json(data)
+      }
+    })
+  }
 
-function saveComment (commentData) {
-  comments.save(commentData, function (err, data) {
-    if (err) {
-      throw err
-    } else {
-      return true
-    }
-  })
-}
+  function removeComment (commentId) {
+    comments.remove({_id: commentId}, function (err, data) {
+      if (err) {
+        throw err
+      } else {
+        return true
+      }
+    })
+  }
 
-function findByNewsId (newsId) {
-  comments.find({newsId: newsId}).sort({postDate: 1}, function (err, data) {
-    if (err) {
-      throw err
-    } else {
-      return data
-    }
-  })
-}
-
-function removeComment (commentId) {
-  comments.remove({_id: commentId}, function (err, data) {
-    if (err) {
-      throw err
-    } else {
-      return true
-    }
-  })
-}
-
-module.exports = {
-  saveComment: saveComment,
-  findByNewsId: findByNewsId,
-  removeComment: removeComment
+  return {
+    saveComment: saveComment,
+    findByNewsId: findByNewsId,
+    removeComment: removeComment
+  }
 }

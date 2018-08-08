@@ -35,7 +35,7 @@ Intro Section
 <div class="jumbotron jumbotron-fluid" style="background-image: url('images/intrbackground.jpg')">
     <div class="container">
         <h1 class="display-4">New York Time Tech</h1>
-        {{!-- <p class="lead">New York Time Tech</p> --}}
+        <p class="lead">New York Time Tech</p>
     </div>
 </div>
 
@@ -43,9 +43,12 @@ Intro Section
 News Section
 ============================-->
 <section id="portfolio"  class="section-bg" >
-    <div class="row">
-        <div class="col-1 offset-md-10">
-            <button id="scrapeBnt" type="button" class="btn btn-info">Scrape more news</button>
+    <div class="row justify-content-end">
+        <div class="col-2">
+            <button id="scrapeBnt" type="button" class="btn btn-info">Scrape New Articles</button>
+        </div>
+        <div class="col-2">
+            <button id="freshBnt" type="button" class="btn btn-info">Fetch Articles</button>
         </div>
     </div>
     <div id="newsSec">

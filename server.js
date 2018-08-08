@@ -15,6 +15,7 @@ mongoose.Promise = Promise
 mongoose.connect(MONGODB_URI)
 var schemas = require('./models/schema.js')(mongoose)
 var news = mongoose.model('news', schemas.newsSchema)
+var comments = mongoose.model('comments', schemas.commentsSchema)
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -30,8 +31,9 @@ app.engine(
 )
 app.set('view engine', 'handlebars')
 
-require('./routes/indexRoutes.js')(app, news)
+require('./routes/indexRoutes.js')(app, news, comments)
 require('./routes/newsRoutes.js')(app, news)
+require('./routes/commentsRoutes.js')(app, comments)
 
 // Start the server
 app.listen(PORT, function () {

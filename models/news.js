@@ -5,21 +5,23 @@ module.exports = function (news) {
   //   var news = mongoose.model('news', schemas.newsSchema)
 
   function saveNews (newsData, res) {
-    // console.log(newsData);
-    news.create(newsData)
-      .then(function (data) {
-        // View the added result in the console
-        // return res.json(data)
-        console.log("saved")
-      })
+    news.find({title: newsData.title}).then(function (data) {
+      if (data.length === 0) {
+        news.create(newsData)
+          .then(function (data) {
+            // View the added result in the console
+            console.log(data)
+          })
+      }
+    })
   }
 
-  function findAll (res, formatDate, concat, cb) {
+  function findAll (res, helpers, cb) {
     news.find().sort({saveDate: 1}).exec(function (err, data) {
       if (err) {
         console.log(err)
       } else {
-        cb(res, data, formatDate, concat)
+        cb(res, data, helpers)
         // return data
       }
     })
