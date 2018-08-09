@@ -20,12 +20,13 @@ module.exports = function (comments) {
     })
   }
 
-  function removeComment (commentId) {
-    comments.remove({_id: commentId}, function (err, data) {
+  function removeComment (commentId, res) {
+    comments.findByIdAndDelete(commentId, function (err, data) {
+      console.log(data)
       if (err) {
-        throw err
+        res.sendStatus(400).end()
       } else {
-        return true
+        res.sendStatus(200).end()
       }
     })
   }

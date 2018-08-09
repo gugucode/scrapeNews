@@ -17,7 +17,7 @@ module.exports = function (news) {
   }
 
   function findAll (res, helpers, cb) {
-    news.find().sort({saveDate: 1}).exec(function (err, data) {
+    news.find().sort({writtenDate: -1}).exec(function (err, data) {
       if (err) {
         console.log(err)
       } else {
