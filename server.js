@@ -23,12 +23,8 @@ app.use(bodyParser.json())
 app.use(express.static('public'))
 
 // Handlebars
-app.engine(
-  'handlebars',
-  exphbs({
-    defaultLayout: 'main'
-  })
-)
+var handlesbar = require('./routes/handlebars.js')(exphbs)
+app.engine('handlebars', handlesbar.engine)
 app.set('view engine', 'handlebars')
 
 require('./routes/indexRoutes.js')(app, news, comments)

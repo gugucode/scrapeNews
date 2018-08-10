@@ -5,21 +5,16 @@ module.exports = function (news) {
     news.find({title: newsData.title}).then(function (data) {
       if (data.length === 0) {
         news.create(newsData)
-          .then(function (data) {
-            // View the added result in the console
-            console.log(data)
-          })
       }
     })
   }
 
-  function findAll (res, helpers, cb) {
+  function findAll (res, cb) {
     news.find().sort({writtenDate: -1}).exec(function (err, data) {
       if (err) {
         console.log(err)
       } else {
-        cb(res, data, helpers)
-        // return data
+        cb(res, data)
       }
     })
   }

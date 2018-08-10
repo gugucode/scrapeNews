@@ -9,12 +9,9 @@ function loadComments () {
       method: 'GET',
       url: '/postId/' + id
     }).then(function (data) {
-      // show article's comments
-      data.forEach(element => {
-        element.postDate = new Date(element.postDate)
-        var commentblocks = Handlebars.templates.commentblocks(element)
-        $('#commentList' + id).prepend(commentblocks)
-      })
+      $('#commentList' + id).append(data)
+      var commentCount = (data.match(/delBnt/g) || []).length;
+      $('#commentCount' + id).text('Comment(' + commentCount + ')')
     })
   }
 }
@@ -33,33 +30,12 @@ function markSaved () {
   var savedArticles = JSON.parse(localStorage.getItem('scrapeArticles'))
 
   if (savedArticles !== null) {
-    // savedArticles = savedArticles.split(',')
-
     savedArticles.forEach(function (id) {
       var saveBnt = $("p button[post-id='" + id + "']")
       changeSaveBnt(saveBnt)
     })
   }
 }
-
-// concatenate two strings
-var concat = function (s1, s2) {
-  return s1 + s2
-}
-
-// convert date object to mm/dd/yyyy
-var formatDate = function (date) {
-  // console.log(date)
-  if (date) {
-    var m = date.getMonth() + 1
-    var d = date.getDate() === 31 ? 31 : date.getDate() + 1
-    return m + '/' + d + '/' + date.getFullYear()
-  }
-}
-
-// register handlebars helpers
-Handlebars.registerHelper('concat', concat)
-Handlebars.registerHelper('formatDate', formatDate)
 
 // load below functions when html is ready
 $(function () {
@@ -89,17 +65,17 @@ $(function () {
         method: 'POST',
         url: '/saveComment',
         data: {
-          postUser: 'xx',
+          postUser: 'unknow',
           comment: comment,
           newsId: id
         }
       }).then(function (data) {
-        // craete and save date object to data.postDate
-        data.postDate = new Date(data.postDate)
-        // pass returned data to commentblocks template
-        var commentblocks = Handlebars.templates.commentblocks(data)
-        $('#commentList' + id).prepend(commentblocks)
+        $('#commentList' + id).prepend(data)
         $('#commentBox' + id).val('')
+        // increase number of comments
+        var commentCount = $('#commentCount' + id)
+        var count = parseInt(($(commentCount).text())[8]) + 1
+        $(commentCount).text('Comment(' + count + ')')
       })
     }
   })
@@ -115,6 +91,11 @@ $(function () {
     }).then(function (data) {
       if (data === 'OK') {
         $(p).remove()
+        // reduce number of comments
+        var newsId = ($(p).parent().attr('id')).slice(11)
+        var commentCount = $('#commentCount' + newsId)
+        var count = parseInt(($(commentCount).text())[8]) - 1
+        $(commentCount).text('Comment(' + count + ')')
       } else {
         console.log('fail')
       }

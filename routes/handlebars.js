@@ -11,7 +11,14 @@ var formatDate = function (date) {
   }
 }
 
-module.exports = {
-  concat: concat,
-  formatDate: formatDate
+function hbsHelpers (exphbs) {
+  return exphbs.create({
+    defaultLayout: 'main',
+    helpers: {
+      concat: concat,
+      formatDate: formatDate
+    }
+  })
 }
+
+module.exports = hbsHelpers

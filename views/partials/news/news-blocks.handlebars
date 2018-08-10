@@ -4,15 +4,18 @@
         <div class="col-10" style="background:AliceBlue;margin: 2em">
             <div class="posts-wrap" post-id={{_id}}>
                 <div class="article-info" >
-                    <h4><a href={{link}} target="_blank">{{title}}</a></h4>
+                    <h5><a href={{link}} target="_blank">{{title}}</a></h5>
                     <p>By {{author}}</p>
                     <p>{{formatDate writtenDate}}</p>
                     <p>
-                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target={{concat "#news" _id}} aria-expanded="false" aria-controls="collapseExample">
+                        <button class="btn btn-info btn-sm" type="button" data-toggle="collapse" data-target={{concat "#news" _id}} aria-expanded="false" aria-controls="collapseExample">
                             Detail
                         </button>
-                        <button class="btn btn-primary saveBnt" post-id={{_id}}>Save it</button>
+                        <button class="btn btn-info btn-sm saveBnt" post-id={{_id}}>Save it</button>
+                        <button type="button" class="btn btn-light btn-sm" id={{concat 'commentCount' _id}}></button>
                     </p>
+
+                    {{!-- Show more info --}}
                     <div class="collapse" id={{concat "news" _id}}>
                         <div class="card card-body">
                             <p>{{summary}}</p>
@@ -20,10 +23,10 @@
                             {{!-- form for user to put comment --}}
                             <form>
                                 <div class="form-group">
-                                    <label for="exampleFormControlTextarea1">Commment</label>
+                                    <label for="exampleFormControlTextarea1">Comment</label>
                                     <textarea class="form-control" id={{concat "commentBox" _id}} rows="3"></textarea>
                                 </div>
-                                <button class="btn btn-primary commentBnt" post-id={{_id}}>Submit</button>
+                                <button class="btn btn-primary btn-sm commentBnt" post-id={{_id}}>Submit</button>
                             </form>
                             {{!-- display comments here --}}
                             <div id={{concat "commentList" _id}}>
