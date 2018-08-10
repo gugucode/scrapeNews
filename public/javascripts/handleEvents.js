@@ -19,21 +19,25 @@ function loadComments () {
   }
 }
 
-// Check all loaded articles if they are saved, and if yes, mark them as saved 
+function changeSaveBnt (saveBnt) {
+  $(saveBnt).text('Unsave')
+  $(saveBnt).removeClass('saveBnt').addClass('unsaveBnt')
+  $(saveBnt).removeClass('btn-primary').addClass('btn-warning')
+  var p = $(saveBnt).parent().parent().parent().parent().parent()
+  $(p).attr('isSave', 'yes')
+}
+
+// Check all loaded articles if they are saved, and if yes, mark them as saved
 function markSaved () {
   // get a list of saved articles from localStorage
-  var savedArticles = localStorage.getItem('scrapeArticles')
+  var savedArticles = JSON.parse(localStorage.getItem('scrapeArticles'))
 
   if (savedArticles !== null) {
-    savedArticles = savedArticles.split(',')
+    // savedArticles = savedArticles.split(',')
 
     savedArticles.forEach(function (id) {
       var saveBnt = $("p button[post-id='" + id + "']")
-      $(saveBnt).text('Unsave')
-      $(saveBnt).removeClass('saveBnt').addClass('unsaveBnt')
-      $(saveBnt).removeClass('btn-primary').addClass('btn-warning')
-      var p = $(saveBnt).parent().parent().parent().parent().parent()
-      $(p).attr('isSave', 'yes')
+      changeSaveBnt(saveBnt)
     })
   }
 }
@@ -117,41 +121,40 @@ $(function () {
     })
   })
 
+  // handle save article event
   $('.posts-wrap').on('click', 'button.saveBnt', function () {
     var newsId = $(this).attr('post-id')
     var savedArticles = localStorage.getItem('scrapeArticles')
 
-    // savedArticles = savedArticles === null ? newsId : savedArticles + ',' + newsId
     if (savedArticles === null) {
-      localStorage.setItem('scrapeArticles', newsId)
+      localStorage.setItem('scrapeArticles', JSON.stringify([newsId]))
+      changeSaveBnt(this)
     } else if (savedArticles.indexOf(newsId) === -1) {
-      localStorage.setItem('scrapeArticles', savedArticles + ',' + newsId)
-    }
-    
-    $(this).text('Unsave').removeClass('saveBnt').addClass('unsaveBnt')
-    $(this).removeClass('btn-primary').addClass('btn-warning')
-    var p = $(this).parent().parent().parent().parent().parent()
-    $(p).attr('isSave', 'yes')
+      var tmp = JSON.parse(savedArticles)
+      tmp.push(newsId)
+      localStorage.setItem('scrapeArticles', JSON.stringify(tmp))
+      changeSaveBnt(this)
+    }   
   })
 
+  // handle unsave article event
   $('.posts-wrap').on('click', 'button.unsaveBnt', function () {
     var newsId = $(this).attr('post-id')
-    var savedArticles = localStorage.getItem('scrapeArticles')
-    console.log(savedArticles)
-    var startInd = savedArticles.indexOf(newsId)
-    if (startInd !== -1) {
-      var pre = startInd === 0 ? '' : savedArticles.slice(0, startInd - 1)
-      var next = savedArticles.slice(startInd + newsId.length + 1)
-      console.log("pre"+pre)
-      console.log("next"+next)
-      localStorage.setItem('scrapeArticles', pre + next)
+    var savedArticles = JSON.parse(localStorage.getItem('scrapeArticles'))
+    var ind = savedArticles.indexOf(newsId)
+
+    if (ind !== -1) {
+      savedArticles.splice(ind, 1)
+      localStorage.setItem('scrapeArticles', JSON.stringify(savedArticles))
+      $(this).text('Save it').removeClass('unsaveBnt').addClass('saveBnt')
+      $(this).removeClass('btn-warning').addClass('btn-primary')
+      var p = $(this).parent().parent().parent().parent().parent()
+      $(p).attr('isSave', 'no')
     }
-    $(this).text('Save it').removeClass('unsaveBnt').addClass('saveBnt')
-    $(this).removeClass('btn-warning').addClass('btn-primary')
-    var p = $(this).parent().parent().parent().parent().parent()
-    $(p).attr('isSave', 'no')
+
   })
 
+  // handle show all saved articles event
   $('#SavedArt').on('click', function () {
     var unSaveDom = $("[issave='no']")
     for (var i = 0; i < unSaveDom.length; i++) {
