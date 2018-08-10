@@ -1,9 +1,6 @@
 
 module.exports = function (news) {
-//   var schemas = require('./schema.js')(mongoose)
-
-  //   var news = mongoose.model('news', schemas.newsSchema)
-
+  
   function saveNews (newsData, res) {
     news.find({title: newsData.title}).then(function (data) {
       if (data.length === 0) {

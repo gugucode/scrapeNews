@@ -1,17 +1,17 @@
 
-
 {{#each news}}
-    <div class="row justify-content-md-center">
+    <div class="row justify-content-md-center" isSave="no">
         <div class="col-10" style="background:AliceBlue;margin: 2em">
             <div class="posts-wrap" post-id={{_id}}>
-                <div class="portfolio-info" >
+                <div class="article-info" >
                     <h4><a href={{link}} target="_blank">{{title}}</a></h4>
                     <p>By {{author}}</p>
                     <p>{{formatDate writtenDate}}</p>
                     <p>
-                        <a class="btn btn-primary" data-toggle="collapse" href={{concat "#news" _id}} role="button" aria-expanded="false" >
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target={{concat "#news" _id}} aria-expanded="false" aria-controls="collapseExample">
                             Detail
-                        </a>
+                        </button>
+                        <button class="btn btn-primary saveBnt" post-id={{_id}}>Save it</button>
                     </p>
                     <div class="collapse" id={{concat "news" _id}}>
                         <div class="card card-body">
