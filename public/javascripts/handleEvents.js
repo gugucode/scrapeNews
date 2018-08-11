@@ -58,6 +58,7 @@ $(function () {
   $('.commentBnt').on('click', function (event) {
     event.preventDefault()
     var id = $(this).attr('post-id')
+    var user = $('#user' + id).val().trim()
     var comment = $('#commentBox' + id).val().trim()
 
     if (comment !== '') {
@@ -65,7 +66,7 @@ $(function () {
         method: 'POST',
         url: '/saveComment',
         data: {
-          postUser: 'unknow',
+          postUser: user || 'unknow',
           comment: comment,
           newsId: id
         }
@@ -83,19 +84,20 @@ $(function () {
   // handle delete comment event
   $('.posts-wrap').on('click', 'button.delBnt', function () {
     var commentId = $(this).attr('comment-id')
-    var p = ($(this).parent()).parent()
+    var commentSection = ($(this).parent()).parent()
 
     $.ajax({
       url: '/commentDelete/' + commentId,
       method: 'DELETE'
     }).then(function (data) {
       if (data === 'OK') {
-        $(p).remove()
         // reduce number of comments
-        var newsId = ($(p).parent().attr('id')).slice(11)
+        var newsId = ($(commentSection).parent().attr('id')).slice(11)
         var commentCount = $('#commentCount' + newsId)
         var count = parseInt(($(commentCount).text())[8]) - 1
         $(commentCount).text('Comment(' + count + ')')
+
+        $(commentSection).remove()
       } else {
         console.log('fail')
       }
