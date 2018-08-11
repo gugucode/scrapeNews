@@ -1,6 +1,5 @@
 
 module.exports = function (news) {
-  
   function saveNews (newsData, res) {
     news.find({title: newsData.title}).then(function (data) {
       if (data.length === 0) {

@@ -6,11 +6,11 @@ In this project, we build a scraping application to scrape articles from New Yor
 
 ## Getting Started
 
-You can check out the web application at 
+You can check out the web application at https://morning-taiga-57374.herokuapp.com/
 
 or 
 
-Goes to  https://gugucode.github.io/mysite/ -> click "GifTastic"
+Goes to  https://gugucode.github.io/mysite/ -> click "ScrapeNews"
 
 
 ## Built With
@@ -27,7 +27,7 @@ Please contact Erin at meiyuechang@gmail.com for details on our code of conduct,
 
 ## Authors
 
-* **Erin Mei** - *Initial work* - [Portfolio]( https://gugucode.github.io/mysite/)
+* **Erin Mei** - *Initial work* - [Portfolio](https://gugucode.github.io/mysite/)
 
 
 

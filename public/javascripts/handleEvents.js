@@ -57,6 +57,7 @@ $(function () {
   // handle save comment event
   $('.commentBnt').on('click', function (event) {
     event.preventDefault()
+    // get article's id, user name and comment
     var id = $(this).attr('post-id')
     var user = $('#user' + id).val().trim()
     var comment = $('#commentBox' + id).val().trim()
@@ -66,7 +67,7 @@ $(function () {
         method: 'POST',
         url: '/saveComment',
         data: {
-          postUser: user || 'unknow',
+          postUser: user || 'unknown',
           comment: comment,
           newsId: id
         }
