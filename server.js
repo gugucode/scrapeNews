@@ -4,7 +4,7 @@ var bodyParser = require('body-parser')
 var exphbs = require('express-handlebars')
 
 var app = express()
-const PORT = 3000
+const PORT = process.env.PORT || 3000
 
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/mongoHeadlines'
